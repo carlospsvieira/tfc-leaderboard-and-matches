@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3001
 
 # Configurar os comandos para iniciar a aplicação de acordo com as boas práticas
-CMD ["node", "dist/app.js"]
+CMD ["npm", "start"]
