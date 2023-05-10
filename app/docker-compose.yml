@@ -51,4 +51,4 @@ services:
       timeout: 10s
       retries: 5
     cap_add:
-      - SYS_NICE # Deve omitir alertas menores
+      - SYS_NICE # Deve omitir alertas menores.
