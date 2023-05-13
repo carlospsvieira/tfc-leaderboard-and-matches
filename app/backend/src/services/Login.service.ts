@@ -2,7 +2,7 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import User from '../database/models/Users.model';
 
-interface LoginCredentials {
+export interface LoginCredentials {
   email: string;
   password: string;
 }

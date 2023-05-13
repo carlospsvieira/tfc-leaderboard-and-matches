@@ -1,6 +1,7 @@
 import * as express from 'express';
 import TeamsController from './controllers/Teams.controller';
 import LoginController from './controllers/Login.controller';
+import { validateToken, getRole } from './middlewares/validateToken';
 
 class App {
   public app: express.Express;
@@ -16,6 +17,7 @@ class App {
     this.app.get('/teams/:id', TeamsController.getTeamById);
     this.app.get('/matches', (req, res) => res.status(200).json('I work just fine'));
     this.app.post('/login', LoginController.login);
+    this.app.get('/login/role', validateToken, getRole);
   }
 
   private config():void {
