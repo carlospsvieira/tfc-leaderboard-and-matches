@@ -28,6 +28,7 @@ export const validateToken = (req: CustomRequest, res: Response, next: NextFunct
 };
 
 export const getRole = (req: CustomRequest, res: Response) => {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const { role } = req.user!;
 
   res.status(200).json({ role });
