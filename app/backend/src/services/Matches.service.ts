@@ -15,6 +15,20 @@ class MatchesService {
       throw new Error('Failed to fetch matches');
     }
   }
+
+  public static async finishMatchById(id: number): Promise<void> {
+    try {
+      const match = await Match.findByPk(id);
+      if (!match) {
+        throw new Error('Match not found');
+      }
+      match.inProgress = false;
+
+      await match.save();
+    } catch (error) {
+      throw new Error('Failed to finish the match');
+    }
+  }
 }
 
 export default MatchesService;
