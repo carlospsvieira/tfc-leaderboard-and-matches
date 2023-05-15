@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import MatchesService from '../services/Matches.service';
 
 class MatchesController {
+  private static serverErrorMessage = 'Internal Server Error';
+
   public static getAllMatches = async (req: Request, res: Response) => {
     try {
       const { inProgress } = req.query;
@@ -18,7 +20,7 @@ class MatchesController {
       res.json(filteredMatches);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Internal Server Error' });
+      res.status(500).json({ message: this.serverErrorMessage });
     }
   };
 
@@ -31,7 +33,21 @@ class MatchesController {
       return res.status(200).json({ message: 'Finished' });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: 'Internal Server Error' });
+      return res.status(500).json({ message: this.serverErrorMessage });
+    }
+  };
+
+  public static updateMatchInProgress = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const { homeTeamGoals, awayTeamGoals } = req.body;
+
+      await MatchesService.updateMatchInProgress(Number(id), homeTeamGoals, awayTeamGoals);
+
+      return res.status(200).json({ homeTeamGoals, awayTeamGoals });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: this.serverErrorMessage });
     }
   };
 }

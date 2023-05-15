@@ -29,6 +29,26 @@ class MatchesService {
       throw new Error('Failed to finish the match');
     }
   }
+
+  public static async updateMatchInProgress(
+    id: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<void> {
+    try {
+      const match = await Match.findByPk(id);
+      if (!match) {
+        throw new Error('Match not found');
+      }
+
+      match.homeTeamGoals = homeTeamGoals;
+      match.awayTeamGoals = awayTeamGoals;
+
+      await match.save();
+    } catch (error) {
+      throw new Error('Failed to update match in progress');
+    }
+  }
 }
 
 export default MatchesService;
