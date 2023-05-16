@@ -49,6 +49,27 @@ class MatchesService {
       throw new Error('Failed to update match in progress');
     }
   }
+
+  public static async createMatchInProgress(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<Match> {
+    try {
+      const match = await Match.create({
+        homeTeamId,
+        awayTeamId,
+        homeTeamGoals,
+        awayTeamGoals,
+        inProgress: true,
+      });
+
+      return match;
+    } catch (error) {
+      throw new Error('Failed to create match in progress');
+    }
+  }
 }
 
 export default MatchesService;

@@ -50,6 +50,24 @@ class MatchesController {
       return res.status(500).json({ message: this.serverErrorMessage });
     }
   };
+
+  public static createMatchInProgress = async (req: Request, res: Response) => {
+    try {
+      const { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals } = req.body;
+
+      const match = await MatchesService.createMatchInProgress(
+        homeTeamId,
+        awayTeamId,
+        homeTeamGoals,
+        awayTeamGoals,
+      );
+
+      return res.status(201).json(match);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: this.serverErrorMessage });
+    }
+  };
 }
 
 export default MatchesController;

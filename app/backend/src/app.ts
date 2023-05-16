@@ -1,8 +1,4 @@
 import * as express from 'express';
-// import TeamsController from './controllers/Teams.controller';
-// import LoginController from './controllers/Login.controller';
-// import MatchController from './controllers/Matches.controller';
-// import { validateToken, getRole } from './middlewares/validateToken';
 import MatchesRouter from './routes/matches.route';
 import TeamsRouter from './routes/teams.route';
 import LoginRouter from './routes/login.route';
@@ -18,6 +14,7 @@ class App {
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
 
+    // Routes
     this.app.use(TeamsRouter);
     this.app.use(MatchesRouter);
     this.app.use(LoginRouter);
