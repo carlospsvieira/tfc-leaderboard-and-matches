@@ -1,8 +1,27 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import MatchesService from '../services/Matches.service';
+import Team from '../database/models/Teams.model';
 
 class MatchesController {
   private static serverErrorMessage = 'Internal Server Error';
+
+  public static async validateMatchInput(req: Request, res: Response, next: NextFunction) {
+    const { homeTeamId, awayTeamId } = req.body;
+    const errorMessage = 'It is not possible to create a match with two equal teams';
+
+    const homeTeam = await Team.findByPk(homeTeamId);
+    const awayTeam = await Team.findByPk(awayTeamId);
+
+    if (!homeTeam || !awayTeam) {
+      return res.status(404).json({ message: 'There is no team with such id!' });
+    }
+
+    if (homeTeamId === awayTeamId) {
+      return res.status(422).json({ message: errorMessage });
+    }
+
+    next();
+  }
 
   public static getAllMatches = async (req: Request, res: Response) => {
     try {
