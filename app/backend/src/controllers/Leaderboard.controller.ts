@@ -1,13 +1,14 @@
 import { Request, Response } from 'express';
-import LeaderboardService from '../services/Leaderboard.service';
+import LeaderboardService, { TeamLeaderboard } from '../services/Leaderboard.service';
 
 class LeaderboardController {
   public static async getHomeLeaderboard(req: Request, res: Response): Promise<void> {
     try {
-      const leaderboard = await LeaderboardService.getHomeLeaderboard();
-      res.json(leaderboard);
+      const leaderboard: TeamLeaderboard[] = await LeaderboardService.getHomeLeaderboard();
+      res.status(200).json(leaderboard);
     } catch (error) {
-      res.status(500).json({ error: 'Failed to fetch leaderboard' });
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
     }
   }
 }
